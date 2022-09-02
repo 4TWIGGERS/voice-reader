@@ -39,7 +39,7 @@ const itemWithTiming = {
 };
 
 export default function App() {
-  const [results, setResults] = useState(["your text will go here "]);
+  const [results, setResults] = useState([]);
   const [isListening, setIsListening] = useState(false);
   const offsetX = useSharedValue(0);
   const offsetY = useSharedValue(0);
@@ -94,33 +94,37 @@ export default function App() {
   const callAction = async (result) => {
     const text = result.value[0];
 
-    // setResults(result.value ?? []);
-
     if (text !== textValue.current) {
       textValue.current = text;
       const latsWord = splitLastWords(text, 1);
-      setResults([latsWord]);
+      // setResults([latsWord]);
       switch (latsWord) {
         case "stop":
           await stopSpeech();
+          setResults([latsWord]);
           return;
         case "left":
           offsetX.value = Left;
+          setResults([latsWord]);
           return;
         case "right":
           offsetX.value = Right;
+          setResults([latsWord]);
           return;
         case "bottom":
         case "down":
           offsetY.value = Bottom;
+          setResults([latsWord]);
           return;
         case "top":
         case "up":
           offsetY.value = Top;
+          setResults([latsWord]);
           return;
         case "middle":
           offsetY.value = Middle;
           offsetX.value = Middle;
+          setResults([latsWord]);
           return;
         case "wiggle":
           rotation.value = withSequence(
@@ -128,18 +132,23 @@ export default function App() {
             withRepeat(withTiming(20, { duration: 100 }), 6, true),
             withTiming(0, { duration: 50 })
           );
+          setResults([latsWord]);
           return;
         case "round":
           borderRadius.value = 100;
+          setResults([latsWord]);
           return;
         case "square":
           borderRadius.value = 0;
+          setResults([latsWord]);
           return;
         case "shrink":
           widthHeight.value = 50;
+          setResults([latsWord]);
           return;
         case "grow":
           widthHeight.value = 100;
+          setResults([latsWord]);
           return;
         default:
           break;
@@ -179,22 +188,6 @@ export default function App() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.Text}>Press the button and start speaking.</Text>
-      <TouchableOpacity style={styles.button} onPress={toggleListening}>
-        <Text style={styles.Text}>
-          {isListening ? "Stop speaking" : "Start speaking"}
-        </Text>
-      </TouchableOpacity>
-      <Text style={styles.Text}>Results:</Text>
-      <View style={styles.resultsCont}>
-        {results.map((result, index) => {
-          return (
-            <Text key={`result-${index}`} style={styles.Text}>
-              {result}
-            </Text>
-          );
-        })}
-      </View>
       <View style={styles.boxContainer}>
         <Animated.View
           style={[styles.item, StyleSheet.absoluteFill, customSpringStylesBlur]}
@@ -212,6 +205,22 @@ export default function App() {
             source={require("./assets/1290.png")}
           />
         </Animated.View>
+      </View>
+      <Text style={styles.Text}>Press the button and start speaking.</Text>
+      <TouchableOpacity style={styles.button} onPress={toggleListening}>
+        <Text style={styles.Text}>
+          {isListening ? "Stop speaking" : "Start speaking"}
+        </Text>
+      </TouchableOpacity>
+      <Text style={styles.Text}>Results:</Text>
+      <View style={styles.resultsCont}>
+        {results.map((result, index) => {
+          return (
+            <Text key={`result-${index}`} style={styles.Text}>
+              going {result}
+            </Text>
+          );
+        })}
       </View>
     </SafeAreaView>
   );
@@ -231,13 +240,16 @@ const styles = StyleSheet.create({
   boxContainer: {
     width,
     height: width,
-    backgroundColor: "#24262C",
+    backgroundColor: "#000",
+    marginBottom: 30,
   },
   resultsCont: {
     height: 30,
   },
   Text: {
     color: "white",
+    fontSize: 18,
+    fontWeight: "700",
   },
   button: {
     paddingVertical: 12,
