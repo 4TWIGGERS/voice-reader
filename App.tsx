@@ -217,7 +217,7 @@ export default function App() {
         {results.map((result, index) => {
           return (
             <Text key={`result-${index}`} style={styles.Text}>
-              going {result}
+              {result}
             </Text>
           );
         })}
