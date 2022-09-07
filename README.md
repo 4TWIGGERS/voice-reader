@@ -1,5 +1,7 @@
 # voice-reader React-Native Expo
 
+https://user-images.githubusercontent.com/37814487/188575030-48337051-bf51-45db-847c-fdb4a17a3137.mov
+
 ## Install
 
 ````
